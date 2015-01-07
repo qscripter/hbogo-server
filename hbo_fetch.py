@@ -49,7 +49,10 @@ class HboCatalog:
     for video in root.findall('videoResponses'):
       if video.find('mediaSubType').text == "PRO12_VIDEO":
         for child in video:
-          feature[child.tag] = child.text
+          if child.tag == "runtime":
+            feature['runtime'] = int(child.text)
+          else:
+            feature[child.tag] = child.text
     feature['genres'] = []
     for genre in root.findall('genres'):
       feature['genres'].append(genre.find('name').text)
